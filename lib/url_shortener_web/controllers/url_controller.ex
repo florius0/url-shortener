@@ -3,6 +3,7 @@ defmodule UrlShortenerWeb.UrlController do
 
   alias UrlShortener.Urls
   alias UrlShortener.Urls.Url
+  alias UrlShortenerWeb.ErrorView
 
   action_fallback UrlShortenerWeb.FallbackController
 
@@ -14,14 +15,20 @@ defmodule UrlShortenerWeb.UrlController do
     end
   end
 
-  def create(conn, _), do: send_resp(conn, :bad_request, "Expected query to have a 'url' key")
+  def create(conn, _) do
+    conn
+    |> put_status(:bad_request)
+    |> put_view(ErrorView)
+    |> render("errors.json", errors: "Expected query to have a 'url' key")
+  end
 
   def show(conn, %{"key" => key}) do
     case Urls.get_url_by(short_key: key) do
       nil ->
         conn
         |> put_status(:not_found)
-        |> send_resp()
+        |> put_view(ErrorView)
+        |> render("errors.json", errors: ["URL not found"])
 
       url ->
         conn
@@ -30,5 +37,10 @@ defmodule UrlShortenerWeb.UrlController do
     end
   end
 
-  def show(conn, _), do: send_resp(conn, :bad_request, "Expected query to have a 'key' key")
+  def show(conn, _) do
+    conn
+    |> put_status(:bad_request)
+    |> put_view(ErrorView)
+    |> render("errors.json", errors: ["Expected query to have a 'key' key"])
+  end
 end
