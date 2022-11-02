@@ -38,7 +38,6 @@ defmodule UrlShortener.PageRanks.OpenPageRank do
       @page_rank_url
       |> struct(query: encoded)
       |> URI.to_string()
-      |> IO.inspect()
 
     HTTPoison.get(url, headers)
   end
