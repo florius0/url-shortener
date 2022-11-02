@@ -18,10 +18,8 @@ config :url_shortener, UrlShortenerWeb.Endpoint,
   pubsub_server: UrlShortener.PubSub,
   live_view: [signing_salt: "Xw8wgaK1"]
 
-config :url_shortener, UrlShortener.Urls.OpenPageRankProvider,
-  api_key: "YOUR_API_KEY"
-
-config :url_shortener, UrlShortener.Urls,
+config :url_shortener,
+  open_page_rank_api_key: "YOUR_API_KEY",
   default_expiration: 24 * 60 * 60
 
 # Configures Elixir's Logger
