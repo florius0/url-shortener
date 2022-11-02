@@ -23,8 +23,8 @@ defmodule UrlShortener.PageRanks do
   """
   def get_page_rank!(id), do: Repo.get!(PageRank, id)
 
-  def get_page_rank_by_domain(domain) do
-    Repo.one(from p in PageRank, where: p.domain == ^domain) |> Repo.preload(:url)
+  def get_page_rank_by(by) do
+    Repo.get_by(PageRank, by)
   end
 
   def get_or_create_page_rank_by_domain(%URI{path: domain}) when is_binary(domain),
@@ -37,9 +37,9 @@ defmodule UrlShortener.PageRanks do
     do: domain |> URI.parse() |> get_or_create_page_rank_by_domain()
 
   defp do_get_or_create_page_rank_by_domain(domain) do
-    case get_page_rank_by_domain(domain) do
+    case get_page_rank_by(domain: domain) do
       nil -> create_page_rank(for: domain)
-      page_rank -> page_rank
+      page_rank -> {:ok, page_rank}
     end
   end
 
