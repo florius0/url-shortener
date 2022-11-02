@@ -23,7 +23,9 @@ config :url_shortener,
   # In seconds
   default_expiration: 24 * 60 * 60,
   # Length of shortKey
-  key_byte_count: 15
+  key_byte_count: 15,
+  # Delete expired urls every n secondss
+  sweep_every: 10 * 60
 
 # Configures Elixir's Logger
 config :logger, :console,
