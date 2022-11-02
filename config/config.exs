@@ -20,7 +20,10 @@ config :url_shortener, UrlShortenerWeb.Endpoint,
 
 config :url_shortener,
   open_page_rank_api_key: "YOUR_API_KEY",
-  default_expiration: 24 * 60 * 60
+  # In seconds
+  default_expiration: 24 * 60 * 60,
+  # Length of shortKey
+  key_byte_count: 15
 
 # Configures Elixir's Logger
 config :logger, :console,
