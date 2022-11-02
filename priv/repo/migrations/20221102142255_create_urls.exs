@@ -12,6 +12,6 @@ defmodule UrlShortener.Repo.Migrations.CreateUrls do
       timestamps()
     end
 
-    create index(:urls, [:page_rank_id])
+    create unique_index(:urls, [:page_rank_id])
   end
 end

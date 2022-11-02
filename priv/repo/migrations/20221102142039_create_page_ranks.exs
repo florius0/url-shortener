@@ -6,7 +6,7 @@ defmodule UrlShortener.Repo.Migrations.CreatePageRanks do
       add :id, :binary_id, primary_key: true
       add :domain, :string
       add :rank, :integer
-      add :last_updated, :naive_datetime
+      add :last_updated, :string
 
       timestamps()
     end

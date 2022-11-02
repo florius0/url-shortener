@@ -6,58 +6,6 @@ defmodule UrlShortener.Urls do
   import Ecto.Query, warn: false
   alias UrlShortener.Repo
 
-  alias UrlShortener.Urls.PageRank
-
-  @doc """
-  Returns the list of page_ranks.
-  """
-  def list_page_ranks do
-    Repo.all(PageRank)
-  end
-
-  @doc """
-  Gets a single page_rank.
-
-  Raises `Ecto.NoResultsError` if the Page rank does not exist.
-  """
-  def get_page_rank!(id), do: Repo.get!(PageRank, id)
-
-  def get_page_rank_by_domain(domain) do
-    Repo.one(from p in PageRank, where: p.domain == ^domain)
-  end
-
-  @doc """
-  Creates a page_rank.
-  """
-  def create_page_rank(attrs \\ %{}) do
-    %PageRank{}
-    |> PageRank.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
-  Updates a page_rank.
-  """
-  def update_page_rank(%PageRank{} = page_rank, attrs) do
-    page_rank
-    |> PageRank.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a page_rank.
-  """
-  def delete_page_rank(%PageRank{} = page_rank) do
-    Repo.delete(page_rank)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking page_rank changes.
-  """
-  def change_page_rank(%PageRank{} = page_rank, attrs \\ %{}) do
-    PageRank.changeset(page_rank, attrs)
-  end
-
   alias UrlShortener.Urls.Url
 
   @doc """
@@ -76,12 +24,21 @@ defmodule UrlShortener.Urls do
     Repo.one(from u in Url, where: u.short_key == ^short_key)
   end
 
+  defp expiration_date() do
+    :url_shortener
+    |> Application.fetch_env!(:default_expiration)
+    |> expiration_date()
+  end
+
+  defp expiration_date(d), do: DateTime.utc_now() |> DateTime.add(d, :days)
+
   @doc """
   Creates a url.
   """
-  def create_url(attrs \\ %{}) do
+  def create_url(page_rank, attrs \\ %{}) do
     %Url{}
     |> Url.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:page_rank, page_rank)
     |> Repo.insert()
   end
 

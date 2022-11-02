@@ -1,17 +1,17 @@
 defmodule UrlShortenerWeb.PageRankControllerTest do
   use UrlShortenerWeb.ConnCase
 
-  import UrlShortener.UrlsFixtures
+  import UrlShortener.PageRanksFixtures
 
-  alias UrlShortener.Urls.PageRank
+  alias UrlShortener.PageRanks.PageRank
 
   @create_attrs %{
-    last_updated: ~N[2022-11-01 14:20:00],
+    last_updated: "some last_updated",
     rank: 42,
     url: "some url"
   }
   @update_attrs %{
-    last_updated: ~N[2022-11-02 14:20:00],
+    last_updated: "some updated last_updated",
     rank: 43,
     url: "some updated url"
   }
@@ -37,7 +37,7 @@ defmodule UrlShortenerWeb.PageRankControllerTest do
 
       assert %{
                "id" => ^id,
-               "last_updated" => "2022-11-01T14:20:00",
+               "last_updated" => "some last_updated",
                "rank" => 42,
                "url" => "some url"
              } = json_response(conn, 200)["data"]
@@ -60,7 +60,7 @@ defmodule UrlShortenerWeb.PageRankControllerTest do
 
       assert %{
                "id" => ^id,
-               "last_updated" => "2022-11-02T14:20:00",
+               "last_updated" => "some updated last_updated",
                "rank" => 43,
                "url" => "some updated url"
              } = json_response(conn, 200)["data"]

@@ -1,4 +1,4 @@
-defmodule UrlShortener.Urls.OpenPageRank do
+defmodule UrlShortener.PageRanks.OpenPageRank do
   defstruct [
     :domain,
     :error,
