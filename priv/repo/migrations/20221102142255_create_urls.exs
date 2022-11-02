@@ -7,11 +7,11 @@ defmodule UrlShortener.Repo.Migrations.CreateUrls do
       add :url, :string
       add :short_key, :string
       add :expires_at, :naive_datetime
-      add :pare_rank_id, references(:page_ranks, on_delete: :nothing, type: :binary_id)
+      add :page_rank_id, references(:page_ranks, on_delete: :nothing, type: :binary_id)
 
       timestamps()
     end
 
-    create index(:urls, [:pare_rank_id])
+    create index(:urls, [:page_rank_id])
   end
 end

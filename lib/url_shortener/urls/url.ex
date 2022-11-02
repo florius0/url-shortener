@@ -9,8 +9,7 @@ defmodule UrlShortener.Urls.Url do
     field :short_key, :string
     field :url, :string
 
-
-    belongs_to :pare_rank, UrlShortener.Urls.PageRank
+    belongs_to :page_rank, UrlShortener.Urls.PageRank
 
     timestamps()
   end
