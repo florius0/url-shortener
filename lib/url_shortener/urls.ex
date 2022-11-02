@@ -83,6 +83,10 @@ defmodule UrlShortener.Urls do
     Repo.delete(url)
   end
 
+  def delete_expired() do
+    Repo.delete_all(from u in Url, where: u.expires_at < ago(1, "microsecond"))
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking url changes.
   """
