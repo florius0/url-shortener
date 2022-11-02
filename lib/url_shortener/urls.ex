@@ -22,6 +22,10 @@ defmodule UrlShortener.Urls do
   """
   def get_url!(id), do: Repo.get!(Url, id)
 
+  def get_url_by(by) do
+    Repo.get_by(Url, by)
+  end
+
   def get_url_by_str(url) do
     Repo.all(
       from u in Url,
@@ -44,7 +48,7 @@ defmodule UrlShortener.Urls do
       {:ok, page_rank} ->
         create_url(page_rank, %{
           url: url,
-          expires_at: expiration_date(page_rank.rank),
+          expires_at: expiration_date(page_rank.rank * 24 * 60 * 60),
           short_key: short_key
         })
 
