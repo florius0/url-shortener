@@ -9,7 +9,7 @@ defmodule UrlShortener.PageRanks.PageRank do
     field :rank, :integer
     field :domain, :string
 
-    has_one :url, UrlShortener.Urls.Url
+    has_many :urls, UrlShortener.Urls.Url
 
     timestamps()
   end
